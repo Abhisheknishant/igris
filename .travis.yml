@@ -70,3 +70,22 @@ script:
   - if [ $TRAVIS_OS_NAME = 'linux' ] || [ $TRAVIS_OS_NAME = 'osx' ]; then sudo make install; fi
   - if [ $TRAVIS_OS_NAME = 'windows' ]; then cmake --build . --target install; fi
   - ctest .
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "nmr/xEHxLkebj/C+2WQfDU9pSjkeqgAcOVpRMxWKEUQXJGge+kOX0t7ZlBWK5rEoupoZ1sNATYXc+yP3oRSKYwytawkc9DX5UIRFwAeds15eVhKrWKy/XGcXR1h+lvyJmhRJEmwyj+YOswjULjJQ+fn5UJTnLACbuXhOd6lsA3imKnJDvB88KMfuU/iyzcihMEP6YH+hCRhebgqr1vNdksFr11Q6vlRIjcHg0oXeaN2j5Bgpg4iacc/mj7RbkGdJKNMJvELBfMUZPzQyw0qex0UoHkaA/5ZHvdrBWqAfacaaFhBnrBfJnpv9LzcRYtgjeyRCGIwO1AiTNAQhYdwOKhdVDs2kQPr5UtXjEIMV4mN0YG/mo3Q5LKoKIj7UjiiwAtVMDvkmBAYy6mbZrlcnXVe/XvmDWpj2PwcBOLzWj9bx7Kp78W476GwR/jwYyhP1CZQUQRPO0SHc+JDSWPPAOZ3rxyFOyHAIpV2rG+6A9QsVI/CRgU/AoaHsYdI2UICVVQhNMRuDP9k3gSSRrmRC/dn8rR1O6QSEzlUT7U4PE3/y1LyXIiJwWycVA9LyW3LvJz1ULkjRZVKvQlmCz5Y3HSq6uXKpJTtZXUV+Pnvt7uXisdvOPV9JcFwiPxuhhnEWqs/8OwxTwxFqttmhLPfllew3aHQ1ujwbHfGr+YtpkbQ="
+
+before_install:
+  - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
+addons:
+  coverity_scan:
+    project:
+      name: "mirmik/igris"
+      description: "<Your project description here>"
+    notification_email: netricks@protonmail.com
+    build_command_prepend: "<Your build preprocessing command here>"
+    build_command: "<Your build command here>"
+    branch_pattern: coverity_scan
