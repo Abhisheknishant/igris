@@ -86,6 +86,6 @@ addons:
       name: "mirmik/igris"
       description: "<Your project description here>"
     notification_email: netricks@protonmail.com
-    build_command_prepend: "<Your build preprocessing command here>"
-    build_command: "<Your build command here>"
+    build_command_prepend: cmake .
+    build_command: cmake --build .
     branch_pattern: coverity_scan
