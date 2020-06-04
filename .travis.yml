@@ -31,6 +31,27 @@ matrix:
            - g++-8
       env:
          - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+    - name: "Ubuntu clang++6 gtest"
+      arch: arm64
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+           - clang++-6.0
+      env:
+         - MATRIX_EVAL="CC=clang-6.0 && CXX=clang++-6.0"
+
+    - name: "Ubuntu g++8 gtest"
+      arch: arm64
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+           - g++-8
+      env:
+         - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
 
 before_install:
   eval ${MATRIX_EVAL}
